@@ -10,9 +10,11 @@ Adapter (shim) microservice that :
   
   c. returns a response in the format of mega-corp's geocoder
   
-Setup:
+## Setup:
+
   Set environment variables GEOCLIENT_ID , GEOCLIENT_KEY, and MAPZEN_KEY . 
   
-Run quickly:
+## Run quickly:
+
   mvn spring-boot:run
   
