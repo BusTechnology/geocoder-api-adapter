@@ -1,5 +1,6 @@
 package geocoder;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,7 +76,10 @@ public class NYCGeoclient extends Geocoder {
 
 			latitude = Double.parseDouble(String.valueOf(address.get("latitude")));
 			longitude = Double.parseDouble(String.valueOf(address.get("longitude")));
-			googleGeocoderResponse = new GoogleGeocoderResponse(formatted_address.toString(), latitude, longitude);
+
+			String formattedAddressString = WordUtils.capitalizeFully(formatted_address.toString());
+
+			googleGeocoderResponse = new GoogleGeocoderResponse(formattedAddressString, latitude, longitude);
 		} catch (JSONException e) {
 			System.err.println("Could not decode response from " + response);
 		}
