@@ -12,7 +12,9 @@ import okhttp3.HttpUrl;
 
 public class MapzenAutocomplete extends NYCMapzen {
 	// TODO: factor bounding box into configuration
-	protected static String BASE_URL = "https://search.mapzen.com/v1/autocomplete?&boundary.rect.min_lat=40.477480&boundary.rect.min_lon=-74.259060&boundary.rect.max_lat=40.910970&boundary.rect.max_lon=-73.700152";
+	protected static String BASE_URL =
+			"https://search.mapzen.com/v1/autocomplete?&boundary.rect.min_lat=40.477480&boundary.rect.min_lon=-74.259060&boundary.rect.max_lat=40.910970&boundary.rect.max_lon=-73.700152";
+
 
 	public ArrayList<GoogleGeocoderResponse> autocomplete(String input) {
 		HttpUrl urlWithKey = null;
@@ -54,7 +56,8 @@ public class MapzenAutocomplete extends NYCMapzen {
 	
 				JSONObject properties = (JSONObject) sfs.get("properties");
 				formatted_address = (String) properties.get("label");
-				googleGeocoderResponse.add(new GoogleGeocoderResponse(formatted_address.toString(), latitude, longitude));
+				googleGeocoderResponse.add(
+						new GoogleGeocoderResponse(formatted_address.toString(), latitude, longitude));
 			}
 
 		} catch (JSONException e) {

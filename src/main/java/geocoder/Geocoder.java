@@ -21,9 +21,8 @@ public abstract class Geocoder {
 		HttpUrl	url = urlWithKey.newBuilder()
 				.addQueryParameter(paramName, paramValue)
 				.build();
-		
 //		System.out.println(url.toString());
-		
+
 		Request request = new Request.Builder()
 				.url(url)
 				.build(); 

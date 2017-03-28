@@ -10,31 +10,36 @@ import java.io.IOException;
 import okhttp3.HttpUrl;
 
 import model.GoogleGeocoderResponse;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
+@CacheConfig(cacheNames = "geoclient")
 public class NYCGeoclient extends Geocoder {
 
-	private static final String APP_ID = System.getenv("GEOCLIENT_ID");
-	private static final String APP_KEY = System.getenv("GEOCLIENT_KEY");
-	private static final String BASE_URL = "https://api.cityofnewyork.us/geoclient/v1/search.json?";
+	private static final String GEOCLIENT_ID = System.getenv("GEOCLIENT_ID");
+	private static final String GEOCLIENT_KEY = System.getenv("GEOCLIENT_KEY");
+	private static final String BASE_URL =
+			"https://api.cityofnewyork.us/geoclient/v1/search.json?returnPossiblesWithExact=true&exactMatchMaxLevel=6";
 
 	@Override
 	public HttpUrl keyVerify() throws Exception {
-		if (APP_ID == null) {
+		if (GEOCLIENT_ID == null) {
 			throw new Exception("Missing app_id");
 		}
 
-		if (APP_KEY == null) {
+		if (GEOCLIENT_KEY == null) {
 			throw new Exception("Missing app_key");
 		}
 
 		HttpUrl	url = HttpUrl.parse(BASE_URL).newBuilder()
-				.addQueryParameter("app_id", APP_ID)
-				.addQueryParameter("app_key", APP_KEY)
+				.addQueryParameter("app_id", GEOCLIENT_ID)
+				.addQueryParameter("app_key", GEOCLIENT_KEY)
 				.build();
 		return url;
 	}
 
 	@Override
+	@Cacheable
 	public GoogleGeocoderResponse run(String input) {
 		HttpUrl urlWithKey = null;
 		try {
